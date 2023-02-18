@@ -1,7 +1,8 @@
 from util import *
 
 # Add your import statements here
-
+import re
+from nltk.tokenize.treebank import TreebankWordTokenizer
 
 
 
@@ -25,6 +26,11 @@ class Tokenization():
 		tokenizedText = None
 
 		#Fill in code here
+		tokenizedText = []
+		for t in text:
+			nt = re.sub('[^a-zA-Z0-9 ]', ' ', t)
+			nt = nt.split()
+			tokenizedText.append(nt)
 
 		return tokenizedText
 
@@ -48,5 +54,6 @@ class Tokenization():
 		tokenizedText = None
 
 		#Fill in code here
-
+		tokenizedText = [TreebankWordTokenizer().tokenize(string) for string in text]
+		
 		return tokenizedText
