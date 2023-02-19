@@ -23,9 +23,7 @@ class SentenceSegmentation():
 		segmentedText = re.split('\.|\!|\?',text)
 		segmentedText = [i.lstrip() for i in segmentedText]
 		if '' in segmentedText:
-                        segmentedText.remove('')
-
-		
+			segmentedText.remove('')
 
 		return segmentedText
 
@@ -48,6 +46,4 @@ class SentenceSegmentation():
 
 		segmentedText = nltk.tokenize.sent_tokenize(text)
 
-		
-		
 		return segmentedText
