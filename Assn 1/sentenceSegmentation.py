@@ -4,6 +4,7 @@ from util import *
 
 import re
 import nltk
+nltk.download('punkt')
 
 class SentenceSegmentation():
 
