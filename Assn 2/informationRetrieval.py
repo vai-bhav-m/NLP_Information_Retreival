@@ -1,7 +1,5 @@
 from util import *
 
-# Add your import statements here
-
 
 
 
@@ -9,6 +7,8 @@ class InformationRetrieval():
 
 	def __init__(self):
 		self.index = None
+		self.idfs = None
+		self.dvecs = None
 
 	def buildIndex(self, docs, docIDs):
 		"""
@@ -27,12 +27,38 @@ class InformationRetrieval():
 		None
 		"""
 
-		index = None
+		index = {}
 
 		#Fill in code here
+		tf_dict = {} # {term: {doc_id: term_f}}
+		idf_dict = {} # {term: term_idf}
+		N = len(docIDs)
+
+		for i, id in enumerate(docIDs):
+			current_doc = docs[i]
+			for sentence in current_doc:
+				for word in sentence:
+					if word not in tf_dict:
+						tf_dict[word] = dict(zip(docIDs, [0] * N))
+					tf_dict[word][id] += 1
+
+		
+		idf_dict = dict(zip(list(tf_dict.keys()), [0] * len(tf_dict)))
+		
+		for word in idf_dict:
+			idf_dict[word] = np.log10(N / np.sum(np.array(list(tf_dict[word].values())) != 0))   # Typically idf calculation involves log2, but I'm using log10 here
+			index[word] = dict(zip(docIDs, [tf * idf_dict[word] for tf in list(tf_dict[word].values())]))
+		
+		dvecs = {}
+		for id in docIDs:
+			dvec = []
+			for word in idf_dict:
+				dvec.append(index[word][id])
+			dvecs[id] = dvec
 
 		self.index = index
-
+		self.idfs = idf_dict
+		self.dvecs = dvecs
 
 	def rank(self, queries):
 		"""
@@ -55,6 +81,27 @@ class InformationRetrieval():
 		doc_IDs_ordered = []
 
 		#Fill in code here
+		for query in queries:
+			q_w_count = {}
+			for sentence in query:
+				for word in sentence:
+					if word not in q_w_count:
+						q_w_count[word] = 0
+					q_w_count[word] += 1
+			
+			qvec = []
+			for word in self.idfs:
+				if word not in q_w_count:
+					tf = 0
+				else:
+					tf = q_w_count[word]
+				qvec.append(tf * self.idfs[word])
+		
+			scores = {}
+			for id in self.dvecs:
+				scores[id] = cosine_similarity(self.dvecs[id], qvec)
+			
+			doc_IDs_ordered.append(sorted(scores, key=scores.get, reverse=True))
 	
 		return doc_IDs_ordered
 
