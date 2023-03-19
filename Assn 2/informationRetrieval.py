@@ -27,10 +27,8 @@ class InformationRetrieval():
 		None
 		"""
 
-		index = {}
-
 		#Fill in code here
-		tf_dict = {} # {term: {doc_id: term_f}}
+		index = {} # {term: {doc_id: term_f}}
 		idf_dict = {} # {term: term_idf}
 		N = len(docIDs)
 
@@ -38,23 +36,27 @@ class InformationRetrieval():
 			current_doc = docs[i]
 			for sentence in current_doc:
 				for word in sentence:
-					if word not in tf_dict:
-						tf_dict[word] = dict(zip(docIDs, [0] * N))
-					tf_dict[word][id] += 1
+					if word not in index:
+						index[word] = {}
+					if id not in index[word]:
+						index[word][id] = 1
+					else:
+						index[word][id] += 1
 
+		idf_dict = {}
 		
-		idf_dict = dict(zip(list(tf_dict.keys()), [0] * len(tf_dict)))
-		
-		for word in idf_dict:
+		for word in index:
 			# Typically idf calculation involves log2, but I'm using log10 here
-			idf_dict[word] = np.log10(N / np.sum(np.array(list(tf_dict[word].values())) > 0))   
-			index[word] = dict(zip(docIDs, [tf * idf_dict[word] for tf in list(tf_dict[word].values())]))
+			idf_dict[word] = np.log10(N / len(index[word]))
 		
 		dvecs = {}  # Document vectors of the form {doc_id: document vector of len(vocabulary)} 
 		for id in docIDs:
 			dvec = []
 			for word in idf_dict:
-				dvec.append(index[word][id])
+				if id in index[word]:
+					dvec.append(index[word][id] * idf_dict[word])
+				else:
+					dvec.append(0)
 			dvecs[id] = dvec
 
 		self.index = index
@@ -81,7 +83,6 @@ class InformationRetrieval():
 
 		doc_IDs_ordered = []
 
-		#Fill in code here
 		for query in queries:
 			q_w_count = {}
 			for sentence in query:
@@ -101,7 +102,7 @@ class InformationRetrieval():
 			scores = {}
 			for id in self.dvecs:
 				a_vec, b_vec = np.array(self.dvecs[id]), np.array(qvec)
-				scores[id] = np.dot(a_vec, b_vec) / (np.linalg.norm(a_vec) * np.linalg.norm(b_vec))
+				scores[id] = np.dot(a_vec, b_vec) / (norm(a_vec) * norm(b_vec))
 			
 			doc_IDs_ordered.append(sorted(scores, key=scores.get, reverse=True))
 	

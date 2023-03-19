@@ -1,6 +1,9 @@
 # Add your import statements here
 import numpy as np
+from numpy.linalg import norm
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 
 import re
 import nltk
