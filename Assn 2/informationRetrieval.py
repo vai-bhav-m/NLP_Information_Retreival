@@ -108,9 +108,8 @@ class InformationRetrieval():
                                 for id in self.index[w]:
                                         if id not in doc_subset:
                                                 doc_subset.append(id)
-                        for id in doc_subset:                
-                                a_vec, b_vec = np.array(self.dvecs[id]), np.array(qvec)
-                                scores[id] = np.dot(a_vec, b_vec) / (np.linalg.norm(a_vec) * np.linalg.norm(b_vec))
+                        for id in doc_subset:                              
+                                scores[id] = cosine_similarity(self.dvecs[id], qvec) 
                         
                         doc_IDs_ordered.append(sorted(scores, key=scores.get, reverse=True))
         
