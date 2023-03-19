@@ -46,10 +46,11 @@ class InformationRetrieval():
 		idf_dict = dict(zip(list(tf_dict.keys()), [0] * len(tf_dict)))
 		
 		for word in idf_dict:
-			idf_dict[word] = np.log10(N / np.sum(np.array(list(tf_dict[word].values())) != 0))   # Typically idf calculation involves log2, but I'm using log10 here
+			# Typically idf calculation involves log2, but I'm using log10 here
+			idf_dict[word] = np.log10(N / np.sum(np.array(list(tf_dict[word].values())) > 0))   
 			index[word] = dict(zip(docIDs, [tf * idf_dict[word] for tf in list(tf_dict[word].values())]))
 		
-		dvecs = {}
+		dvecs = {}  # Document vectors of the form {doc_id: document vector of len(vocabulary)} 
 		for id in docIDs:
 			dvec = []
 			for word in idf_dict:
@@ -99,7 +100,8 @@ class InformationRetrieval():
 		
 			scores = {}
 			for id in self.dvecs:
-				scores[id] = cosine_similarity(self.dvecs[id], qvec)
+				a_vec, b_vec = np.array(self.dvecs[id]), np.array(qvec)
+				scores[id] = np.dot(a_vec, b_vec) / (np.linalg.norm(a_vec) * np.linalg.norm(b_vec))
 			
 			doc_IDs_ordered.append(sorted(scores, key=scores.get, reverse=True))
 	
