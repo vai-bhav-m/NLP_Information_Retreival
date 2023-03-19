@@ -46,8 +46,8 @@ class InformationRetrieval():
 		idf_dict = {}
 		
 		for word in index:
-			# Typically idf calculation involves log2, but I'm using log10 here
-			idf_dict[word] = np.log10(N / len(index[word]))
+			
+			idf_dict[word] = np.log2(N / len(index[word]))
 		
 		dvecs = {}  # Document vectors of the form {doc_id: document vector of len(vocabulary)} 
 		for id in docIDs:
@@ -92,17 +92,20 @@ class InformationRetrieval():
 					q_w_count[word] += 1
 			
 			qvec = []
+			qwords = []
 			for word in self.idfs:
 				if word not in q_w_count:
 					tf = 0
 				else:
 					tf = q_w_count[word]
+					qwords.append(word)
 				qvec.append(tf * self.idfs[word])
 		
 			scores = {}
-			for id in self.dvecs:
-				a_vec, b_vec = np.array(self.dvecs[id]), np.array(qvec)
-				scores[id] = np.dot(a_vec, b_vec) / (norm(a_vec) * norm(b_vec))
+			for w in qwords:
+                                for id in self.index[w]:
+                                        a_vec, b_vec = np.array(self.dvecs[id]), np.array(qvec)
+                                        scores[id] = np.dot(a_vec, b_vec) / (np.linalg.norm(a_vec) * np.linalg.norm(b_vec))
 			
 			doc_IDs_ordered.append(sorted(scores, key=scores.get, reverse=True))
 	
