@@ -213,6 +213,12 @@ class SearchEngine:
 		np.savetxt('hypothesesdata/mavp.csv', m, delimiter =", ", fmt ='% s')
 		np.savetxt('hypothesesdata/ndcg.csv', n, delimiter =", ", fmt ='% s')
 
+		np.savetxt('plotdata/precision.csv', precisions, delimiter = ", ", fmt = '% s')
+		np.savetxt('plotdata/recall.csv', recalls, delimiter = ", ", fmt = '% s')
+		np.savetxt('plotdata/fscore.csv', fscores, delimiter = ", ", fmt = '% s')
+		np.savetxt('plotdata/mavp.csv', MAPs, delimiter = ", ", fmt = '% s')
+		np.savetxt('plotdata/ndcg.csv', nDCGs, delimiter = ", ", fmt = '% s')
+
 		
 	def handleCustomQuery(self):
 		"""
