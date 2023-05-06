@@ -46,9 +46,11 @@ class Tokenization():
 			A list of lists where each sub-list is a sequence of tokens
 		"""
 
-		tokenizedText = None
-
+		tokenizedText = []
 		#Fill in code here
-		tokenizedText = [TreebankWordTokenizer().tokenize(string) for string in text]
-		
+		tokenized = [TreebankWordTokenizer().tokenize(string) for string in text]
+		for list in tokenized:
+			filtered_list = [s for s in list if any(c.isalpha() for c in s)]
+			tokenizedText.append(filtered_list)
+					
 		return tokenizedText

@@ -60,9 +60,9 @@ class InformationRetrieval():
                                         dvec.append(0)
                         dvecs[id] = dvec
                 
-                index2 = {k: v for k, v in index.items() if k.isalpha()}
+                #index2 = {k: v for k, v in index.items() if k.isalpha()}
 
-                self.index = index2
+                self.index = index
                 self.idfs = idf_dict
                 self.dvecs = dvecs
 
@@ -84,7 +84,7 @@ class InformationRetrieval():
                         of documents in their predicted order of relevance to the ith query
                 """
 
-                threshold = 0
+                threshold = 10
                 doc_IDs_ordered = []
 
                 for query in queries:
@@ -107,9 +107,10 @@ class InformationRetrieval():
                                         candidate_list = {}
                                         for candidate in candidates:
                                                 candidate_list[candidate] = distance(word, candidate)*math.log2(1/candidates[candidate])
+                                        
                                         sorted_list = dict(sorted(candidate_list.items(), key=lambda item: item[1], reverse=False))
                                         corrected_word = next(iter(sorted_list))
-                                        if sorted_list[corrected_word] > threshold:           
+                                        if sorted_list[corrected_word] < threshold:           
                                                 q_w_count_revised[corrected_word] = q_w_count[word]
                                         else:
                                                 q_w_count_revised[word] = q_w_count[word]

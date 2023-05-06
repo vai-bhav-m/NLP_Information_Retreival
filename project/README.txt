@@ -1,4 +1,17 @@
+GENERATING RESULTS FOR DIFFERENT MODELS
+
+Navigate to the folder containing the required model, use the command
+- python3.11 main.py -custom 
+for a custom query
+
+- python3.11 python3.11 main.py -dataset cranfield/ -out_folder output/ -segmenter punkt -tokenizer ptb
+to run all the queries in the Cranfield dataset
+
+
+
 HYPOTHESIS TESTING
+
+Once the results for the required models have been generated individually,
 
 python3.11 hyptest.py <name of folder/model 1> <name of folder/model 2>
 

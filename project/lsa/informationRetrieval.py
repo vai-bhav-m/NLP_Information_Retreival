@@ -86,7 +86,7 @@ class InformationRetrieval:
 
         i = 0
         for query in queries:
-            print(f"Done with {i/len(queries) * 100} % queries.")
+            #print(f"Done with {i/len(queries) * 100} % queries.")
             i += 1
 
             q_w_count = {}

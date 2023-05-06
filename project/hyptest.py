@@ -18,6 +18,7 @@ alpha = 0.05
 
 measures = ['precision', 'recall', 'fscore', 'mavp', 'ndcg']
 
+print("Testing at rank = "+str(k))
 for measure in measures:
     with open(dist1 + '/hypothesesdata/'+ measure +'.csv', newline='') as f:
         reader = csv.reader(f)
@@ -36,12 +37,42 @@ for measure in measures:
 
     result = ttest_rel(dist1_vals[k-1], dist2_vals[k-1], alternative = 'less')
     print(measure+": ")
-    if(result.pvalue<=alpha):
-        print('p-value is '+str(result.pvalue)+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+    if(dist1_vals[k-1]==dist2_vals[k-1]):
+        print("The distributions are exactly the same.")
     else:
-         print('p-value is '+str(result.pvalue)+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+        if(result.pvalue<=alpha):
+            print('p-value is '+str(result.pvalue)+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+        else:
+            print('p-value is '+str(result.pvalue)+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
 
+
+print("Testing over values averaged over all ranks")
+for measure in measures:
+    with open(dist1 + '/hypothesesdata/'+ measure +'.csv', newline='') as f:
+        reader = csv.reader(f)
+        dist1_vals = list(reader)
     
+    for j in range(len(dist1_vals)):
+        dist1_vals[j] = [float(i) for i in dist1_vals[j]]
+
+    with open(dist2 + '/hypothesesdata/'+ measure +'.csv', newline='') as f:
+        reader = csv.reader(f)
+        dist2_vals = list(reader)
+    
+    for j in range(len(dist1_vals)):
+        dist2_vals[j] = [float(i) for i in dist2_vals[j]]
+    
+    dist1_vals_averaged = np.mean(dist1_vals, axis=0)
+    dist2_vals_averaged = np.mean(dist2_vals, axis=0)
+    result = ttest_rel(dist1_vals_averaged, dist2_vals_averaged, alternative = 'less')
+    print(measure+': ')
+    if(np.array_equal(dist1_vals_averaged, dist2_vals_averaged)):
+        print("The distributions are exactly the same.")
+    else: 
+        if(result.pvalue<=alpha):
+            print('p-value is '+str(result.pvalue)+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+        else:
+            print('p-value is '+str(result.pvalue)+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
 
 
 
