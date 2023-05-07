@@ -9,7 +9,7 @@ class InformationRetrieval():
                 self.index = None
                 self.idfs = None
                 self.dvecs = None
-                self.title_k = 3
+                self.title_k = 2
 
         def buildIndex(self, docs, titles, docIDs):
                 """

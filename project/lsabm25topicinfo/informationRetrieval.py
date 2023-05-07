@@ -10,7 +10,7 @@ class InformationRetrieval:
 		self.k = 1.85
 		self.b = 0.8
 		self.adl = 0
-		self.title_k = 3
+		self.title_k = 2
 
 	def buildIndex(self, docs, titles, docIDs):
 		"""
