@@ -55,7 +55,7 @@ class InformationRetrieval():
                 idf_dict = {}
                 
                 for word in index:                       
-                        idf_dict[word] = np.log2(N / len(index[word]))
+                        idf_dict[word] = np.log2(1+ (N - len(index[word]) + 0.5)/ (len(index[word]) + 0.5))
 
                 
                 dvecs = {}  # Document vectors of the form {doc_id: document vector of len(vocabulary)} 
