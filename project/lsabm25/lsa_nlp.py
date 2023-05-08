@@ -18,8 +18,8 @@ def lsa_transform(dvecs):
     #         f"Variance captured for {n_comp} components: {svd.explained_variance_ratio_.sum() * 100} %"
     #     )
 
-    # I will retain 500 components as they capture > 80% of variance
-    svd = TruncatedSVD(n_components=500, n_iter=10, random_state=42)
+    
+    svd = TruncatedSVD(n_components=350, n_iter=10, random_state=42)
     svd.fit(A)
     A_trans = svd.transform(A)
 

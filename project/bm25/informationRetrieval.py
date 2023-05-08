@@ -9,8 +9,8 @@ class InformationRetrieval():
                 self.index = None
                 self.idfs = None
                 self.dvecs = None
-                self.k = 1.85
-                self.b = 0.8
+                self.k = 2
+                self.b = 0.9
                 self.adl = 0
 
         def buildIndex(self, docs, docIDs):

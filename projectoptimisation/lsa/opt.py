@@ -4,6 +4,7 @@ import argparse
 import main
 from optuna.visualization import plot_intermediate_values
 from optuna.visualization import plot_optimization_history
+import optuna.visualization as vis
 
 #using ndcg as the evaluation metric to be optimised (since relevance scores are available to us)
 
@@ -31,13 +32,16 @@ def to_be_optimised(n_components):
     return searchEngine.evaluateDataset(n_components)
 
 def objective(trial):
-    n_components = trial.suggest_int('n_components', 300, 800, step =50)
+    n_components = trial.suggest_int('n_components', 100, 500, step =25)
     return to_be_optimised(n_components)
 
 study = optuna.create_study(direction='maximize')
-study.optimize(objective, n_trials=100)
+study.optimize(objective, n_trials=20)
 
-plot_optimization_history(study)
+fig = vis.plot_optimization_history(study)
+fig.write_image('opt_history.png')
+
+
 
 print("Best score: {} \nBest parameters: {}".format(study.best_value, study.best_params))
 

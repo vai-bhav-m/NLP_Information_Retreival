@@ -32,17 +32,17 @@ def to_be_optimised(n_components, k1, b, w):
     return searchEngine.evaluateDataset(n_components, k1, b, w)
 
 def objective(trial):
-    k1 = trial.suggest_float('k1', 1.75,2.0,step = 0.05)
-    b = trial.suggest_float('b', 0.5, 1, step=0.1)
-    n_components = trial.suggest_int('n_components', 400, 650, step =50)
-    w = trial.suggest_float('w', 1.25, 2.25, step=0.25)
+    k1 = trial.suggest_float('k1', 1.5,2.0,step = 0.05)
+    b = trial.suggest_float('b', 0.6, 0.9, step=0.1)
+    n_components = trial.suggest_int('n_components', 100, 500, step =50)
+    w = trial.suggest_float('w', 1, 2.5, step=0.25)
     return to_be_optimised(n_components, k1, b, w)
 
 study = optuna.create_study(direction='maximize')
 study.optimize(objective, n_trials=100)
 
 fig = vis.plot_optimization_history(study)
-fig.savefig('opt_history.png')
+fig.write_image('opt_history.png')
 
 print("Best score: {} \nBest parameters: {}".format(study.best_value, study.best_params))
 
