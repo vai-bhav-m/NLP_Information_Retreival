@@ -66,7 +66,7 @@ class InformationRetrieval():
                 self.idfs = idf_dict
                 self.dvecs = dvecs
 
-        def rank(self, queries):
+        def rank(self, queries, isCustom):
                 """
                 Rank the documents according to relevance for each query
 
@@ -84,7 +84,7 @@ class InformationRetrieval():
                         of documents in their predicted order of relevance to the ith query
                 """
 
-                threshold = 10
+                threshold = 15
                 doc_IDs_ordered = []
 
                 for query in queries:
@@ -118,7 +118,11 @@ class InformationRetrieval():
                                 else:
                                         q_w_count_revised[word] = q_w_count[word]
                                         
-                        #print(q_w_count_revised)               
+                        #print(q_w_count_revised)
+                        
+                        if(isCustom):
+                                keys_str = ' '.join(q_w_count_revised.keys()) 
+                                print("The spelling corrected query: "+keys_str)             
                         
                         qvec = []
                         qwords = []
