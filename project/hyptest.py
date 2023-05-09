@@ -41,9 +41,9 @@ for measure in measures:
         print("The distributions are exactly the same.")
     else:
         if(result.pvalue<=alpha):
-            print('p-value: '+str(round(result.pvalue,3))+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+            print('P: '+str(round(result.pvalue,3))+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
         else:
-            print('p-value: '+str(round(result.pvalue,3))+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+            print('P: '+str(round(result.pvalue,3))+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
 
 
 print("\n\nTesting over values averaged over all ranks")
@@ -70,9 +70,9 @@ for measure in measures:
         print("The distributions are exactly the same.")
     else: 
         if(result.pvalue<=alpha):
-            print('p-value: '+str(round(result.pvalue,3))+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+            print('P: '+str(round(result.pvalue,3))+". Reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
         else:
-            print('p-value: '+str(round(result.pvalue,3))+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
+            print('P: '+str(round(result.pvalue,3))+". Fail to reject the null hypothesis at the "+str(100*(1-alpha))+"% confidence level.")
 
 
 
