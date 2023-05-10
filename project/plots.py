@@ -1,13 +1,16 @@
 import sys
 import csv
 import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
+
+
 
 dists = []
 for dist in sys.argv[1:]:
     dists.append(dist)
 
 fig = plt.figure()
-measures = measures = ['precision', 'recall', 'fscore', 'mavp', 'ndcg']
+measures = ['precision', 'recall', 'fscore', 'mavp', 'ndcg']
 
 for measure in measures:
     for i in range(len(dists)): 
@@ -18,8 +21,11 @@ for measure in measures:
     
         for j in range(len(dist_vals)):
             dist_vals[j] = [float(i) for i in dist_vals[j]]
-        
+
+        if(measure == 'precision'):
+            plt.gca().yaxis.set_major_locator(ticker.MultipleLocator(0.05))
         plt.plot(range(1,11), dist_vals, label=dist)
+        
        
     plt.title(measure)
     plt.legend()
