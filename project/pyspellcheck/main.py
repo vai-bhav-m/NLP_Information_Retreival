@@ -253,7 +253,7 @@ class SearchEngine:
         for word in query.split():
             corrected_query += f"{check.correction(word)} "
 
-        print(f"\nQuery after correcting any spelling errors:\nf{corrected_query}")
+        print(f"\nQuery after correcting any spelling errors:\n{corrected_query}")
         query = corrected_query
 
         processedQuery = self.preprocessQueries([query])[0]
