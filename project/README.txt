@@ -5,6 +5,8 @@ Navigate to the folder containing the required model, use the command
 for a custom query
 
 - python3.11 python3.11 main.py -dataset cranfield/ -out_folder output/ -segmenter punkt -tokenizer ptb
+(or)
+-python3.11 main.py
 to run all the queries in the Cranfield dataset
 
 
