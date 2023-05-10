@@ -14,7 +14,7 @@ dist1 = sys.argv[1]
 dist2 = sys.argv[2]
 
 #confidence level = 100(1-alpha)
-alpha = 0.1
+alpha = 0.05
 
 measures = ['precision', 'recall', 'fscore', 'mavp', 'ndcg']
 
