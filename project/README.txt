@@ -1,3 +1,9 @@
+FINAL MODEL
+
+Exists in the folder 'final'. The various intermediate models have also been presented for the sake of hypothesis testing and generating plots.
+
+
+
 GENERATING RESULTS FOR DIFFERENT MODELS
 
 Navigate to the folder containing the required model, use the command
