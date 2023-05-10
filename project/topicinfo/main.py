@@ -268,13 +268,15 @@ class SearchEngine:
 
 		# Read documents
 		docs_json = json.load(open(args.dataset + "cran_docs.json", 'r'))[:]
-		doc_ids, docs = [item["id"] for item in docs_json], \
-							[item["body"] for item in docs_json]
+		doc_ids, docs, titles = [item["id"] for item in docs_json], \
+							[item["body"] for item in docs_json], \
+							[item["title"] for item in docs_json]
 		# Process documents
 		processedDocs = self.preprocessDocs(docs)
+		processedTitles = self.preprocessDocs(titles)
 
 		# Build document index
-		self.informationRetriever.buildIndex(processedDocs, doc_ids)
+		self.informationRetriever.buildIndex(processedDocs, processedTitles, doc_ids)
 		# Rank the documents for the query
 		doc_IDs_ordered = self.informationRetriever.rank([processedQuery])[0]
 
